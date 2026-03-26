@@ -35,16 +35,14 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: Build Docker images
         run: |
-          ls
-          pwd
-          echo hello world!
+          docker build -t chaheein123/dp-nginx -f Dockerfile ./nginx
         shell: bash
       # - uses: actions/checkout@v3
-        # name: Build the Docker images
-        # run: |
-        # curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.19.0/bazelisk-linux-amd64"
-        # chmod +x bazelisk-linux-amd64
-        # shell: bash
+      #   name: Build the Docker images
+      #   run: |
+      #   curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.19.0/bazelisk-linux-amd64"
+      #   chmod +x bazelisk-linux-amd64
+      #   shell: bash
       
 
 
