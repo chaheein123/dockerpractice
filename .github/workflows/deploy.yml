@@ -33,10 +33,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-      - name: Build Docker images
+      - name: Build Docker images and push
         run: |
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-nginx:${{ github.sha }} -f ./nginx/Dockerfile ./nginx
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-nginx:${{ github.sha }}
         shell: bash
+
       # - uses: actions/checkout@v3
       #   name: Build the Docker images
       #   run: |
