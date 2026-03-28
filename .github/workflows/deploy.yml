@@ -36,7 +36,13 @@ jobs:
       - name: Build Docker images and push
         run: |
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-nginx:${{ github.sha }} -f ./nginx/Dockerfile ./nginx
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-client:${{ github.sha }} -f ./client/Dockerfile ./client
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-server:${{ github.sha }} -f ./server/Dockerfile ./server
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-worker:${{ github.sha }} -f ./worker/Dockerfile ./worker
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-nginx:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-client:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-server:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-worker:${{ github.sha }}
         shell: bash
 
       # - uses: actions/checkout@v3
