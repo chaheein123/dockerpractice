@@ -1,11 +1,19 @@
 version: '3'
 services:
+  postgres:
+    image: 'postgres:latest'
+    mem_limit: 512m
+    environment:
+      - POSTGRES_PASSWORD=postgres_password
+  redis:
+    image: 'redis:latest'
+    mem_limit: 128m
   client:
-    image: 'rallycoding/multi-client'
+    image: ${DOCKER_HUB_USERNAME}/dp-aws-nginx:${SHA}
     mem_limit: 128m
     hostname: client
   server:
-    image: 'rallycoding/multi-server'
+    image: ${DOCKER_HUB_USERNAME}/dp-aws-server:${SHA}
     mem_limit: 128m
     hostname: api
     environment:
@@ -17,14 +25,14 @@ services:
       - PGPASSWORD=$PGPASSWORD
       - PGPORT=$PGPORT
   worker:
-    image: 'rallycoding/multi-worker'
+    image: ${DOCKER_HUB_USERNAME}/dp-aws-worker:${SHA}
     mem_limit: 128m
     hostname: worker
     environment:
       - REDIS_HOST=$REDIS_HOST
       - REDIS_PORT=$REDIS_PORT
   nginx:
-    image: 'rallycoding/multi-nginx'
+    image: ${DOCKER_HUB_USERNAME}/dp-aws-nginx:${SHA}
     mem_limit: 128m
     hostname: nginx
     ports:
