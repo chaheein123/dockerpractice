@@ -9,10 +9,12 @@ services:
     image: 'redis:latest'
     mem_limit: 128m
   client:
-    image: ${DOCKER_HUB_USERNAME}/dp-aws-nginx:${SHA}
+    image: ${DOCKER_HUB_USERNAME}/dp-aws-client:${SHA}
     mem_limit: 128m
     hostname: client
-  server:
+    # environment:
+    #   - WDS_SOCKET_PORT=0
+  api:
     image: ${DOCKER_HUB_USERNAME}/dp-aws-server:${SHA}
     mem_limit: 128m
     hostname: api

@@ -45,25 +45,20 @@ jobs:
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/dp-aws-worker:${{ github.sha }}
         shell: bash
 
-      # - uses: actions/checkout@v3
-      #   name: Build the Docker images
-      #   run: |
-      #   curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.19.0/bazelisk-linux-amd64"
-      #   chmod +x bazelisk-linux-amd64
-      #   shell: bash
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # Change this if your EC2 is in a different region
       
+      - name: Deploy
+        run: |
+          aws ssm send-command \
+            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
+            --document-name "AWS-RunShellScript" \
+            --parameters 'commands=["pwd"]'
+        shell: bash
 
-
-
-  # Push the images to the Docker Hub
-
-
-  # Use AWS CLI/CodeDeploy to deploy the apps (Enterprise standard) OR Give your EC2 an IAM Role that allows it to talk to SSM (aws ssm send-command --document-name "AWS-RunShellScript" --targets "InstanceIds=i-12345" --parameters 'commands=["cd /app && docker-compose pull && docker-compose up -d"]')
-
-  # AWS_ACCESS_KEY_ID
-
-  # AWS_SECRET_ACCESS_KEY
-
-  # AWS_REGION (e.g., us-east-1)
-
-  # DOCKER_HUB_USERNAME / PASSWORD
+        
+      
