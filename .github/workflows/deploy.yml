@@ -68,13 +68,15 @@ jobs:
               "rm -r app",
               "mkdir app",
               "cd app",
-              "docker-compose -f docker-compose.yml down -v",
+              "curl -L https://raw.githubusercontent.com/${{ github.repository }}/main/docker-compose.yml -o docker-compose.yml"
+              "docker-compose down --remove-orphans",
               "docker-compose pull",
-              "docker-compose -f docker-compose.yml up --build -d"
+              "docker-compose up -d"
+              "docker system prune -f"
             ]'
         shell: bash
 
-        
+
         
       
 # /dockerpractice/prod/POSTGRES_PASSWORD
