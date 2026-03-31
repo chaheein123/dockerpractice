@@ -68,7 +68,7 @@ jobs:
               "rm -r app",
               "mkdir app",
               "cd app",
-              "curl -L https://raw.githubusercontent.com/${{ github.repository }}/main/docker-compose.yml -o docker-compose.yml"
+              "curl -L https://raw.githubusercontent.com/${{ github.repository }}/main/docker-compose.yml -o docker-compose.yml",
               "docker-compose down --remove-orphans",
               "docker-compose pull",
               "docker-compose up -d"
