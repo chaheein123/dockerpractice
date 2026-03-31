@@ -4,7 +4,9 @@ services:
     image: 'postgres:latest'
     mem_limit: 512m
     environment:
-      - POSTGRES_PASSWORD=postgres_password
+      - POSTGRES_USER=${PGUSER}
+      - POSTGRES_DB=${PGDATABASE}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   redis:
     image: 'redis:latest'
     mem_limit: 128m
@@ -12,20 +14,20 @@ services:
     image: ${DOCKER_HUB_USERNAME}/dp-aws-client:${SHA}
     mem_limit: 128m
     hostname: client
-    # environment:
-    #   - WDS_SOCKET_PORT=0
+    environment:
+      - WDS_SOCKET_PORT=0
   api:
     image: ${DOCKER_HUB_USERNAME}/dp-aws-server:${SHA}
     mem_limit: 128m
     hostname: api
     environment:
-      - REDIS_HOST=$REDIS_HOST
-      - REDIS_PORT=$REDIS_PORT
-      - PGUSER=$PGUSER
-      - PGHOST=$PGHOST
-      - PGDATABASE=$PGDATABASE
-      - PGPASSWORD=$PGPASSWORD
-      - PGPORT=$PGPORT
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=${PGUSER}
+      - PGHOST=postgres
+      - PGDATABASE=${PGDATABASE}
+      - PGPASSWORD=${POSTGRES_PASSWORD}
+      - PGPORT=5432
   worker:
     image: ${DOCKER_HUB_USERNAME}/dp-aws-worker:${SHA}
     mem_limit: 128m
@@ -39,3 +41,4 @@ services:
     hostname: nginx
     ports:
       - '80:80'
+

@@ -57,8 +57,19 @@ jobs:
           aws ssm send-command \
             --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["cd /home/ec2-user", "touch hi.txt"]'
+            --parameters 'commands=[
+              "export SHA=${{ github.sha }}",
+              "export DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}",
+              "cd /home/ec2-user",
+              "rm -r app",
+              "mkdir app",
+              "cd app",
+              "docker-compose -f docker-compose.yml down -v",
+              "docker-compose pull",
+              "docker-compose -f docker-compose.yml up --build -d"
+            ]'
         shell: bash
 
         
       
+# /dockerpractice/prod/POSTGRES_PASSWORD
