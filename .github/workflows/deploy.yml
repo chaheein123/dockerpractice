@@ -63,7 +63,6 @@ jobs:
               "export PGUSER=$(aws ssm get-parameter --name /dockerpractice/prod/PGUSER --with-decryption --query Parameter.Value --output text)",
               "export PGDATABASE=$(aws ssm get-parameter --name /dockerpractice/prod/PGDATABASE --with-decryption --query Parameter.Value --output text)",
               "export POSTGRES_PASSWORD=$(aws ssm get-parameter --name /dockerpractice/prod/POSTGRES_PASSWORD --with-decryption --query Parameter.Value --output text)",
-              "export REDIS_HOST=$(aws ssm get-parameter --name /dockerpractice/prod/REDIS_HOST --with-decryption --query Parameter.Value --output text)",
               "cd /home/ec2-user",
               "rm -r app",
               "mkdir app",
