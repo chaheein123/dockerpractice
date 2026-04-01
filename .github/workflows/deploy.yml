@@ -58,6 +58,10 @@ jobs:
             --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
             --document-name "AWS-RunShellScript" \
             --parameters 'commands=[
+              "cd /home/ec2-user",
+              "rm -r app",
+              "mkdir app",
+              "cd app",
               "echo \"PGUSER=$(aws ssm get-parameter --name /dockerpractice/prod/PGUSER --with-decryption --query Parameter.Value --output text)\" > .env",
               "echo \"PGDATABASE=$(aws ssm get-parameter --name /dockerpractice/prod/PGDATABASE --with-decryption --query Parameter.Value --output text)\" >> .env",
               "echo \"POSTGRES_PASSWORD=$(aws ssm get-parameter --name /dockerpractice/prod/POSTGRES_PASSWORD --with-decryption --query Parameter.Value --output text)\" >> .env",
@@ -65,10 +69,6 @@ jobs:
               "echo \"SHA=${{ github.sha }}\" >> .env",
               "echo \"DOCKER_HUB_USERNAME=${{ secrets.DOCKER_HUB_USERNAME }}\" >> .env",
               
-              "cd /home/ec2-user",
-              "rm -r app",
-              "mkdir app",
-              "cd app",
               "curl -L https://raw.githubusercontent.com/${{ github.repository }}/main/docker-compose.yml -o docker-compose.yml",
               "docker-compose down --remove-orphans",
               "docker-compose pull",
