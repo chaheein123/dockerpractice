@@ -76,7 +76,5 @@ jobs:
             ]'
         shell: bash
 
-
-        
       
 # /dockerpractice/prod/POSTGRES_PASSWORD
