@@ -79,6 +79,7 @@ jobs:
               "docker-compose down --remove-orphans",
               "docker-compose pull",
               "docker-compose up -d",
+              "rm .env",
               "docker system prune -f",
             ]'
         shell: bash
