@@ -18,7 +18,7 @@ const pgClient = new Pool({
   password: keys.pgPassword,
   port: keys.pgPort,
   ssl:
-    process.env.NODE_ENV !== 'productionsss'
+    process.env.NODE_ENV !== 'production'
       ? false
       : { rejectUnauthorized: false },
 });
