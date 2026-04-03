@@ -20,6 +20,7 @@ services:
     image: ${DOCKER_HUB_USERNAME}/dp-aws-server:${SHA}
     mem_limit: 128m
     hostname: api
+    restart: always
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
