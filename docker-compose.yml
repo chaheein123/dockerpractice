@@ -1,12 +1,12 @@
 version: '3'
 services:
-  postgres:
-    image: 'postgres:latest'
-    mem_limit: 512m
-    environment:
-      - POSTGRES_USER=${PGUSER}
-      - POSTGRES_DB=${PGDATABASE}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  # postgres:
+  #   image: 'postgres:latest'
+  #   mem_limit: 512m
+  #   environment:
+  #     - POSTGRES_USER=${PGUSER}
+  #     - POSTGRES_DB=${PGDATABASE}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   redis:
     image: 'redis:latest'
     mem_limit: 128m
@@ -24,7 +24,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - PGUSER=${PGUSER}
-      - PGHOST=postgres
+      - PGHOST=${PGHOST}
       - PGDATABASE=${PGDATABASE}
       - PGPASSWORD=${POSTGRES_PASSWORD}
       - PGPORT=5432
