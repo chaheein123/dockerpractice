@@ -35,7 +35,7 @@ const redisClient = redis.createClient({
   host: keys.redisHost,
   port: keys.redisPort,
   socket: {
-    tls: process.env.NODE_ENV !== 'production'
+    tls: process.env.NODE_ENV !== 'productionppp'
       ? false
       : { rejectUnauthorized: false },
     rejectUnauthorized: false // Common for AWS managed certs
