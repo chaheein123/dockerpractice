@@ -2,16 +2,20 @@ const keys = require('./keys');
 const redis = require('redis');
 
 const redisClient = redis.createClient({
-  host: keys.redisHost,
-  port: keys.redisPort,
+  // Use the 'rediss' protocol for TLS
+  url: `rediss://${keys.redisHost}:${keys.redisPort}`,
   socket: {
-    tls: process.env.NODE_ENV !== 'productionppp'
-      ? false
-      : { rejectUnauthorized: false },
-    rejectUnauthorized: false // Common for AWS managed certs
-  },
-  retry_strategy: () => 1000,
+    tls: true,
+    rejectUnauthorized: false,
+    // SRE Tip: Add a timeout so your app doesn't hang forever if the network blips
+    connectTimeout: 10000 
+  }
 });
+
+// Redis v4+ requires you to explicitly call .connect()
+redisClient.connect().catch(console.error);
+
+redisClient.on('error', (err) => console.log('Redis Client Error', err));
 const sub = redisClient.duplicate();
 
 function fib(index) {
