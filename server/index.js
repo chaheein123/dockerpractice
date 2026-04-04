@@ -32,20 +32,21 @@ pgClient.on('connect', (client) => {
 // Redis Client Setup
 const redis = require('redis');
 const redisClient = redis.createClient({
-  // Use the 'rediss' protocol for TLS
-  url: `redis://${keys.redisHost}:${keys.redisPort}`,
-  socket: {
-    tls: true,
-    rejectUnauthorized: false,
-    // SRE Tip: Add a timeout so your app doesn't hang forever if the network blips
-    connectTimeout: 10000 
-  }
+  host: keys.redisHost,
+  port: keys.redisPort,
+  // For v3, TLS is enabled by passing an empty object or options to 'tls'
+  tls: {
+    rejectUnauthorized: false
+  },
+  retry_strategy: () => 1000
 });
 
-// Redis v4+ requires you to explicitly call .connect()
-redisClient.connect().catch(console.error);
+// REMOVE THIS LINE:
+// redisClient.connect().catch(console.error); 
+redisClient.on('error', (err) => {
+  console.error('Redis Error:', err);
+});
 
-redisClient.on('error', (err) => console.log('Redis Client Error', err));
 const redisPublisher = redisClient.duplicate();
 
 // Express route handlers
