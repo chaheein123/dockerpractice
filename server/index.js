@@ -34,6 +34,10 @@ const redis = require('redis');
 const redisClient = redis.createClient({
   host: keys.redisHost,
   port: keys.redisPort,
+  tls:
+    process.env.NODE_ENV !== 'production'
+      ? false
+      : { rejectUnauthorized: false },
   retry_strategy: () => 1000,
 });
 const redisPublisher = redisClient.duplicate();

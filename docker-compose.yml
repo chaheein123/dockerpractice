@@ -7,9 +7,9 @@ services:
   #     - POSTGRES_USER=${PGUSER}
   #     - POSTGRES_DB=${PGDATABASE}
   #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-  redis:
-    image: 'redis:latest'
-    mem_limit: 128m
+  # redis:
+  #   image: 'redis:latest'
+  #   mem_limit: 128m
   client:
     image: ${DOCKER_HUB_USERNAME}/dp-aws-client:${SHA}
     mem_limit: 128m
@@ -22,7 +22,7 @@ services:
     hostname: api
     restart: always
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=${RHOST}
       - REDIS_PORT=6379
       - PGUSER=${PGUSER}
       - PGHOST=${PGHOST}
@@ -34,7 +34,7 @@ services:
     mem_limit: 128m
     hostname: worker
     environment:
-      - REDIS_HOST=redis
+      - REDIS_HOST=${RHOST}
       - REDIS_PORT=6379
   nginx:
     image: ${DOCKER_HUB_USERNAME}/dp-aws-nginx:${SHA}
