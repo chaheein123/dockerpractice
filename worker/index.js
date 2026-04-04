@@ -4,10 +4,12 @@ const redis = require('redis');
 const redisClient = redis.createClient({
   host: keys.redisHost,
   port: keys.redisPort,
-  tls:
-    process.env.NODE_ENV !== 'production'
+  socket: {
+    tls: process.env.NODE_ENV !== 'production'
       ? false
       : { rejectUnauthorized: false },
+    rejectUnauthorized: false // Common for AWS managed certs
+  },
   retry_strategy: () => 1000,
 });
 const sub = redisClient.duplicate();
