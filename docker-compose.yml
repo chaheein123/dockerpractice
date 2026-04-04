@@ -1,5 +1,15 @@
 version: '3'
 services:
+  # postgres:
+  #   image: 'postgres:latest'
+  #   mem_limit: 512m
+  #   environment:
+  #     - POSTGRES_USER=${PGUSER}
+  #     - POSTGRES_DB=${PGDATABASE}
+  #     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  redis:
+    image: 'redis:latest'
+    mem_limit: 128m
   client:
     image: ${DOCKER_HUB_USERNAME}/dp-aws-client:${SHA}
     mem_limit: 128m
