@@ -33,7 +33,7 @@ pgClient.on('connect', (client) => {
 const redis = require('redis');
 const redisClient = redis.createClient({
   // Use the 'rediss' protocol for TLS
-  url: `rediss://${keys.redisHost}:${keys.redisPort}`,
+  url: `redis://${keys.redisHost}:${keys.redisPort}`,
   socket: {
     tls: true,
     rejectUnauthorized: false,
